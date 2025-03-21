@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Odontoprev - Formulário de Dentista</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Odontoprev</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/clinicas">Clínicas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/dentistas">Dentistas</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <h1 th:text="${dentista.idDentista == null} ? 'Novo Dentista' : 'Editar Dentista'"></h1>
+  <form th:action="@{/dentistas}" th:object="${dentista}" method="post">
+    <input type="hidden" th:field="*{idDentista}" />
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
+      <input type="text" class="form-control" id="nome" th:field="*{nome}" required>
+    </div>
+    <div class="mb-3">
+      <label for="especialidade" class="form-label">Especialidade</label>
+      <input type="text" class="form-control" id="especialidade" th:field="*{especialidade}" required>
+    </div>
+    <div class="mb-3">
+      <label for="cro" class="form-label">CRO</label>
+      <input type="text" class="form-control" id="cro" th:field="*{cro}" required>
+    </div>
+    <div class="mb-3">
+      <label for="taxaSinistros" class="form-label">Taxa de Sinistros</label>
+      <input type="number" step="0.1" class="form-control" id="taxaSinistros" th:field="*{taxaSinistros}" required>
+    </div>
+    <div class="mb-3">
+      <label for="endereco" class="form-label">Endereço</label>
+      <select class="form-select" id="endereco" th:field="*{endereco.idEndereco}" required>
+        <option th:each="endereco : ${enderecos}" th:value="${endereco.idEndereco}" th:text="${endereco.logradouro + ', ' + endereco.numero + ', ' + endereco.bairro + ', ' + endereco.cidade}"></option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a th:href="@{/dentistas}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
